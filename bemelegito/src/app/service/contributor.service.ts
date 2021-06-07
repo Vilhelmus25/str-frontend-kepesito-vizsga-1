@@ -13,6 +13,6 @@ export class ContributorService extends BaseService<Contributor> {
     public http: HttpClient,
   ) {
     super(http);
-    this.entity = `repos/angular/angular/contributors?per_page=100`;
+    this.entity = `/repos/angular/angular/contributors?per_page=25`;
   }
 }

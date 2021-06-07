@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Contributor } from '../model/contributor';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class BaseService<T> {
 
   getAll(page: number): Observable<T[]> {
     return this.http.get<T[]>(
-      `${this.apiUrl}${this.entity}`
+      `${this.apiUrl}${this.entity}&page=${page}`
     );
   }
 }
