@@ -1,3 +1,4 @@
+import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { Observable, fromEvent } from 'rxjs';
 import { Contributor } from './model/contributor';
@@ -8,7 +9,7 @@ import { ContributorService } from './service/contributor.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'bemelegito';
 
 
@@ -17,14 +18,19 @@ export class AppComponent {
     const isBottom = document.body.offsetHeight - window.scrollY - 500 < 500;
     if (isBottom) {
       this.page++;
-      this.$list = this.contributorService.getAll(this.page);
+      this.contributorService.loadPage(this.page);
 
     }
 
   });
 
   page: number = 1;
-  $list: Observable<Contributor[]> = this.contributorService.getAll(this.page);
+  $list: Observable<Contributor[]> = this.contributorService.$list;
 
-  constructor(private contributorService: ContributorService) { }
+  constructor(private contributorService: ContributorService,
+  ) { }
+
+  ngOnInit() {
+    this.contributorService.getAll(this.page).subscribe(() => { });
+  }
 }
